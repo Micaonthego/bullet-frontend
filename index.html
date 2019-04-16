@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="index.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper black">
+            <a href="#" class="brand-logo">BULLET.</a>
+        </div>
+    </nav>
+
+    <div class="row">
+        <form id='create-bullet' class="col s12">
+            <div class="row">
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">brightness_low</i>
+                    <input id="priorities" type="text">
+                    <label for="icon_brightness_low">Top Priorities</label>
+                </div>
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">brightness_low</i>
+                    <input id="gratitude" type="text">
+                    <label for="icon_brightness_low">I am Grateful For</label>
+                </div>
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">brightness_2</i>
+                    <input id="accomplishments" type="text">
+                    <label for="icon_brightness_2">I Accomplished</label>
+                </div>
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">brightness_2</i>
+                    <input id="improvements" type="text">
+                    <label for="icon_brightness_2">I Will Improve</label>
+                </div>
+            </div>
+            <button id='submit-bullet' data-action='save-bullet' class="btn waves-effect waves-light teal darken-3"
+                type="submit" name="action">Create Bullet<i class="material-icons right">check</i>
+            </button>
+        </form>
+    </div>
+    <div id='bullet-div'></div>
+</body>
+
+</html>
