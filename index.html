@@ -22,7 +22,7 @@
     </nav>
 
     <div class="row">
-        <form id='create-bullet' class="col s12">
+        <form id='bullet-form' class="col s12">
             <div class="row">
                 <div class="input-field col s6">
                     <i class="material-icons prefix">brightness_low</i>
@@ -45,12 +45,49 @@
                     <label for="icon_brightness_2">I Will Improve</label>
                 </div>
             </div>
-            <button id='submit-bullet' data-action='save-bullet' class="btn waves-effect waves-light teal darken-3"
-                type="submit" name="action">Create Bullet<i class="material-icons right">check</i>
+            <button data-action='save-bullet' class="btn waves-effect waves-light teal darken-3" type="submit"
+                name="action">Create Bullet<i class="material-icons right">control_point</i>
             </button>
         </form>
     </div>
-    <div id='bullet-div'></div>
+    <form style="visibility: hidden" id="change-image">
+        <div class="input-field col s6">
+            <i class="material-icons prefix">add_a_photo</i>
+            <input id="change-photo" type="text">
+            <label for="add_a_photo">Change Photo</label>
+        </div>
+        <button id="save-photo" data-action='save-photo' class="btn waves-effect waves-light teal darken-3"
+            type="submit" name="action">Save Photo<i class="material-icons right"></i>
+        </button>
+    </form>
+    <form style="visibility: hidden" id='edit-form' class="col s12">
+        <div class="row">
+            <div class="input-field col s6">
+                <i class="material-icons prefix">brightness_low</i>
+                <input id="edit-priorities" type="text">
+                <label for="icon_brightness_low">Top Priorities</label>
+            </div>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">brightness_low</i>
+                <input id="edit-gratitude" type="text">
+                <label for="icon_brightness_low">I am Grateful For</label>
+            </div>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">brightness_2</i>
+                <input id="edit-accomplishments" type="text">
+                <label for="icon_brightness_2">I Accomplished</label>
+            </div>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">brightness_2</i>
+                <input id="edit-improvements" type="text">
+                <label for="icon_brightness_2">I Will Improve</label>
+            </div>
+        </div>
+        <button id='edit-bullet' data-action='edit-bullet' class="btn waves-effect waves-light teal darken-3"
+            type="submit" name="action">Edit Bullet<i class="material-icons right"></i>
+        </button>
+    </form>
+    <div id='bullet-div'> </div>
 </body>
 
 </html>
