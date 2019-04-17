@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const usernameInput = document.querySelector('#username-input')
   const aspirationInput = document.querySelector('#user-aspire')
 
-  let bullets;
+  // let bullets;
   let bulletId;
 
   usernameForm.addEventListener('submit', e => {
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
   fetch(url)
     .then(resp => resp.json())
     .then((function (bullets) {
-      console.log('bullets', bullets)
+      // console.log('bullets', bullets)
       bullets.forEach(bullet => {
         return renderBullets(bullet)
       })
@@ -212,7 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderBullets(bullet) {
     return bulletDiv.innerHTML += `
-        <div class="row">
         <div class="col s4">
              <div id="card-${bullet.id}" class="card">
         <div class="card-image waves-effect waves-block waves-light">
@@ -235,7 +234,6 @@ document.addEventListener('DOMContentLoaded', () => {
         <p><b>Tomorrow I Will Improve</b></p>
         <p id="imp-${bullet.id}">${bullet.improvements}</p>
       </div>
-    </div>
     </div>
     </div>
             `
