@@ -12,10 +12,39 @@ document.addEventListener('DOMContentLoaded', () => {
   const editImprovementsInputTag = document.querySelector('#edit-improvements')
   const img_urlInputTag = document.querySelector('#change-photo')
   let url = "http://localhost:3000/api/bullets"
+  let userUrl = "http://localhost:3000/api/users"
   const imageForm = document.querySelector('#change-image')
   const editForm = document.querySelector('#edit-form')
+  const usernameForm = document.querySelector('#username-form')
+  const usernameInput = document.querySelector('#username-input')
+  const aspirationInput = document.querySelector('#user-aspire')
+
   let bullets;
   let bulletId;
+
+  usernameForm.addEventListener('submit', e => {
+    e.preventDefault()
+    const aspiration = aspirationInput.value
+    const username = usernameInput.value
+    console.log("submitted")
+    fetch(userUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          username,
+          aspiration
+        })
+      })
+      .then(res => res.json())
+      .then(newUser => {
+        usernameForm.innerHTML = `<h1>${newUser.username}</h1>
+                                  <h2>${newUser.aspiration}</h2>`
+
+      })
+  })
 
 
   fetch(url)
@@ -196,14 +225,14 @@ document.addEventListener('DOMContentLoaded', () => {
         <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i></span>
         <i id='delete' data-id=${bullet.id} data-action='delete' class="tiny material-icons right">delete</i><i data-id=${bullet.id} data-action='edit' class="tiny material-icons right">edit</i>
         <i class = "material-icons prefix tiny"> brightness_low</i>
-        <p>Top Priorities</p>
+        <p><b>Top Priorities</b></p>
         <p id="pri-${bullet.id}">${bullet.priorities}</p>
-        <p>I am Grateful For</p>
+        <p><b>I am Grateful For</b></p>
         <p id="gra-${bullet.id}">${bullet.gratitude}</p>
         <i class="material-icons prefix tiny">brightness_2</i>
-        <p>I Accomplished</p>
+        <p><b>Today I Accomplished</b></p>
         <p id="acp-${bullet.id}">${bullet.accomplishments}</p>
-        <p>I Will Improve</p>
+        <p><b>Tomorrow I Will Improve</b></p>
         <p id="imp-${bullet.id}">${bullet.improvements}</p>
       </div>
     </div>
@@ -211,17 +240,5 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
             `
   }
-  // Add a button to submit the form
-  // append the bulletId to the form tor the button (somewhere in the DOM)
-  // PATCH localhost:3000/bullets/:id ()
-
-  // after the form is submitted, toggle visibility back to hidden
-
-
-
-  // 
-
-
-
 
 })
