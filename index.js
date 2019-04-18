@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM Content Loaded :)')
+
   // grab all dom nodes that exist on the page
   const bulletDiv = document.querySelector('#bullet-div')
   const form = document.querySelector('#bullet-form')
@@ -209,6 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const deletedCard = document.querySelector(`#card-${bulletDeleted.id}`)
           deletedCard.remove()
         })
+      usernameForm.reset()
     }
   })
 
