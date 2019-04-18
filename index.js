@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let url = "http://localhost:3000/api/bullets"
   let userUrl = "http://localhost:3000/api/users"
   // let bullets; 
-  // create variable of bulletId in global state to access in any functions/listeners where needed
+  // create variable of bulletId in global state to assign where needed
   let bulletId;
   // add an el on form to create a new user
   usernameForm.addEventListener('submit', e => {
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(res => res.json())
       .then(function (bullet) {
         // call function to render bullets to the dom including newly created bullet
-        return renderBullets(bullet)
+        renderBullets(bullet)
       })
     // resets the form so values do not stay in input fields
     form.reset()
@@ -212,6 +212,30 @@ document.addEventListener('DOMContentLoaded', () => {
         })
       usernameForm.reset()
     }
+  })
+
+  bulletDiv.addEventListener('click', e => {
+    bulletId = parseInt(e.target.dataset.id)
+    const emptyHeart = document.querySelector(`#empty-heart[data-id="${bulletId}"]`)
+    if (e.target.dataset.action === 'fill-heart') {
+
+      // fetch(`${url}/${bulletId}`, {
+      //     method: 'PATCH',
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //       'Accept': 'application/json'
+      //     },
+      //     body: JSON.stringify({
+      //       favorite: true
+      //     })
+      //   })
+      //   .then(res => res.json())
+      //   .then(favBullet => {
+
+      //   })
+      emptyHeart.innerText = 'favorite'
+    }
+
   })
 
   function renderBullets(bullet) {
