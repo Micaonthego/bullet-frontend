@@ -110,16 +110,10 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(res => res.json())
         .then(bullets => {
           // console.log(bullets)
-          // I did this and forgot why, talk through or come back
-          const editPrioritiesInput = editPrioritiesInputTag
-          const editGratitudeInput = editGratitudeInputTag
-          const editAccomplishmentsInput = editAccomplishmentsInputTag
-          const editImprovementsInput = editImprovementsInputTag
-          // show the input value in each field as last input for particular bullet
-          editPrioritiesInput.value = bullets.priorities
-          editGratitudeInput.value = bullets.gratitude
-          editAccomplishmentsInput.value = bullets.accomplishments
-          editImprovementsInput.value = bullets.improvements
+          editPrioritiesInputTag.value = bullets.priorities
+          editGratitudeInputTag.value = bullets.gratitude
+          editAccomplishmentsInputTag.value = bullets.accomplishments
+          editImprovementsInputTag.value = bullets.improvements
         })
     }
   })
@@ -128,15 +122,11 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault()
     const editBulletBtn = e.target.querySelector('#edit-bullet')
     if (editBulletBtn.dataset.action === 'edit-bullet') {
-      // also come back to this, am I doing too much here
-      const editPrioritiesInput = editPrioritiesInputTag
-      const editGratitudeInput = editGratitudeInputTag
-      const editAccomplishmentsInput = editAccomplishmentsInputTag
-      const editImprovementsInput = editImprovementsInputTag
-      const newPrioritiesInput = editPrioritiesInput.value
-      const newGratitudeInput = editGratitudeInput.value
-      const newAccomplishmentsInput = editAccomplishmentsInput.value
-      const newImprovementsInput = editImprovementsInput.value
+      //
+      const newPrioritiesInput = editPrioritiesInputTag.value
+      const newGratitudeInput = editGratitudeInputTag.value
+      const newAccomplishmentsInput = editAccomplishmentsInputTag.value
+      const newImprovementsInput = editImprovementsInputTag.value
 
       fetch(`${url}/${bulletId}`, {
           method: 'PATCH',
