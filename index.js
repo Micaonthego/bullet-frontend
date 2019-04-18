@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM Content Loaded :)')
+  // grab all dom nodes that exist on the page
   const bulletDiv = document.querySelector('#bullet-div')
   const form = document.querySelector('#bullet-form')
   const prioritiesInputTag = document.querySelector('#priorities')
@@ -11,22 +12,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const editAccomplishmentsInputTag = document.querySelector('#edit-accomplishments')
   const editImprovementsInputTag = document.querySelector('#edit-improvements')
   const img_urlInputTag = document.querySelector('#change-photo')
-  let url = "http://localhost:3000/api/bullets"
-  let userUrl = "http://localhost:3000/api/users"
   const imageForm = document.querySelector('#change-image')
   const editForm = document.querySelector('#edit-form')
   const usernameForm = document.querySelector('#username-form')
   const usernameInput = document.querySelector('#username-input')
   const aspirationInput = document.querySelector('#user-aspire')
-
-  // let bullets;
+  // create variables for endpoints
+  let url = "http://localhost:3000/api/bullets"
+  let userUrl = "http://localhost:3000/api/users"
+  // let bullets; 
+  // create variable of bulletId in global state to access in any functions/listeners where needed
   let bulletId;
-
+  // add an el on form to create a new user
   usernameForm.addEventListener('submit', e => {
+    // prevent page refresh for ability to manipulate dom
     e.preventDefault()
+    // create variables for the value of 2 input tags in form
     const aspiration = aspirationInput.value
     const username = usernameInput.value
-    console.log("submitted")
+    // check that submit event is working
+    // console.log("submitted")
+    // created fetch post to udpate the database
     fetch(userUrl, {
         method: 'POST',
         headers: {
@@ -40,13 +46,16 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .then(res => res.json())
       .then(newUser => {
-        usernameForm.innerHTML = `<h1>${newUser.username}</h1>
-                                  <h2>${newUser.aspiration}</h2>`
+        // update the dom 
+        usernameForm.innerHTML = `<h3>${newUser.username}</h3>
+                                  <h5>${newUser.aspiration}</h5>`
 
       })
+    usernameForm.reset()
   })
 
-
+  // initial fetch request to render all bullets to the dom
+  // call function renderBullets(bullet) to append them to the dom
   fetch(url)
     .then(resp => resp.json())
     .then((function (bullets) {
@@ -57,10 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }))
 
-
+  // add el on form to create a new bullet
   form.addEventListener('submit', e => {
     e.preventDefault()
     console.log(e.target)
+    // grab all input values
     const prioritiesInput = prioritiesInputTag.value
     const gratitudeInput = gratitudeInputTag.value
     const accomplishmentsInput = accomplishmentsInputTag.value
@@ -81,29 +91,31 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .then(res => res.json())
       .then(function (bullet) {
+        // call function to render bullets to the dom including newly created bullet
         return renderBullets(bullet)
       })
+    // resets the form so values do not stay in input fields
     form.reset()
   })
 
   bulletDiv.addEventListener('click', e => {
+    // set bulletId to clicked bullet, this is possible bc edit icon has data-id of bullet.id interpolated in HTML
     bulletId = parseInt(e.target.dataset.id)
     if (e.target.dataset.action === 'edit') {
       // console.log(bulletId)
-      // console.log(e.target.parentNode)
-      // console.log(e.target.parentNode.querySelector('#edit-form'))
-      // console.log(editForm)
-      editForm.setAttribute("style", "visible")
-      // editForm.style.visibility = "visible"
+      // if edit is clicked, form will be visible
+      editForm.style.display = "block"
+      // get data from backend of particular bullet 
       fetch(`${url}/${bulletId}`)
         .then(res => res.json())
         .then(bullets => {
-          console.log(bullets)
+          // console.log(bullets)
+          // I did this and forgot why, talk through or come back
           const editPrioritiesInput = editPrioritiesInputTag
           const editGratitudeInput = editGratitudeInputTag
           const editAccomplishmentsInput = editAccomplishmentsInputTag
           const editImprovementsInput = editImprovementsInputTag
-
+          // show the input value in each field as last input for particular bullet
           editPrioritiesInput.value = bullets.priorities
           editGratitudeInput.value = bullets.gratitude
           editAccomplishmentsInput.value = bullets.accomplishments
@@ -111,11 +123,12 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
   })
-
+  //  add el on form to update a particular bullet
   editForm.addEventListener('submit', e => {
     e.preventDefault()
     const editBulletBtn = e.target.querySelector('#edit-bullet')
     if (editBulletBtn.dataset.action === 'edit-bullet') {
+      // also come back to this, am I doing too much here
       const editPrioritiesInput = editPrioritiesInputTag
       const editGratitudeInput = editGratitudeInputTag
       const editAccomplishmentsInput = editAccomplishmentsInputTag
@@ -150,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
           imp.innerText = bullet.improvements
         })
       editForm.reset()
-      editForm.style.visibility = "hidden"
+      editForm.style.display = "none"
     }
   })
 
@@ -160,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target.dataset.action === 'add-photo') {
       // console.log('clicked')
       // console.log(bulletId)
-      imageForm.style.visibility = "visible"
+      imageForm.style.display = "block"
     }
   })
 
@@ -189,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
           image.src = bullet.img_url
         })
       imageForm.reset()
-      imageForm.style.visibility = "hidden"
+      imageForm.style.display = "none"
     }
   })
 
@@ -206,7 +219,6 @@ document.addEventListener('DOMContentLoaded', () => {
           const deletedCard = document.querySelector(`#card-${bulletDeleted.id}`)
           deletedCard.remove()
         })
-
     }
   })
 
@@ -218,13 +230,13 @@ document.addEventListener('DOMContentLoaded', () => {
         <img id='image' data-id=${bullet.id} src="${bullet.img_url}">
         </div>
         <div class="card-content">
-          <span class="card-title activator grey-text text-darken-4">${bullet.date}<i class="small material-icons right">arrow_upward</i></span><i data-id=${bullet.id} data-action='add-photo' class="tiny material-icons left">add_a_photo</i>
+          <span class="card-title activator grey-text text-darken-4">${bullet.date}<i class="small material-icons right">arrow_upward</i></span><i data-id=${bullet.id} data-action='add-photo' class="tiny material-icons left">add_a_photo</i><i id='empty-heart' data-id=${bullet.id} data-action='fill-heart' class="tiny material-icons  left">favorite_border</i>
         </div>
         <div class="card-reveal">
         <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i></span>
         <i id='delete' data-id=${bullet.id} data-action='delete' class="tiny material-icons right">delete</i><i data-id=${bullet.id} data-action='edit' class="tiny material-icons right">edit</i>
         <i class = "material-icons prefix tiny"> brightness_low</i>
-        <p><b>Top Priorities</b></p>
+        <p><b>Top Priority</b></p>
         <p id="pri-${bullet.id}">${bullet.priorities}</p>
         <p><b>I am Grateful For</b></p>
         <p id="gra-${bullet.id}">${bullet.gratitude}</p>
